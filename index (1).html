@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Speak Up</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2216%22%20fill=%22%235b6ee1%22/%3E%3Cg%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%226.5%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%3E%3Cpath%20d=%22M27%2022C24%2016%2012%2017%2012%2025C12%2033%2027%2031%2027%2040C27%2048%2015%2048%2012%2043%22/%3E%3Cpath%20d=%22M34%2021V38C34%2051%2050%2051%2050%2038V16%22/%3E%3Cpath%20d=%22M44%2022L50%2015L56%2022%22%20stroke-width=%225%22/%3E%3C/g%3E%3C/svg%3E">
+<style>
+:root{--bg:#fbf8f4;--card:#fff;--ink:#2a2733;--mute:#6b6676;--pri:#5b6ee1;--pri-ink:#fff;--soft:#eceefc;--warn:#fff1ee;--warnb:#e5604a;--line:#e6e1da;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161c;--card:#211f29;--ink:#f1eef7;--mute:#a49fb2;--pri:#8c9bff;--pri-ink:#14131a;--soft:#2a2c47;--warn:#3a211d;--warnb:#ff8a74;--line:#34313f}}
+:root[data-theme="dark"]{--bg:#17161c;--card:#211f29;--ink:#f1eef7;--mute:#a49fb2;--pri:#8c9bff;--pri-ink:#14131a;--soft:#2a2c47;--warn:#3a211d;--warnb:#ff8a74;--line:#34313f}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+.bar{max-width:900px;margin:auto;padding:12px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;justify-content:space-between}
+.logo{font:700 22px Georgia,serif;color:var(--pri)}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav button{border:0;background:none;color:var(--ink);font:inherit;padding:8px 14px;border-radius:99px;cursor:pointer}
+nav button.on{background:var(--pri);color:var(--pri-ink)}
+main{max-width:900px;margin:auto;padding:20px 16px 60px}
+section{display:none}section.on{display:block}
+h1{font:700 clamp(30px,6vw,46px)/1.15 Georgia,serif;margin:.3em 0}
+h2{font:700 24px Georgia,serif;margin:1em 0 .4em}
+p{margin:.5em 0}.mute{color:var(--mute)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.btn{display:inline-block;border:0;background:var(--pri);color:var(--pri-ink);font:inherit;font-weight:600;padding:12px 22px;border-radius:99px;cursor:pointer;text-decoration:none}
+.btn.alt{background:var(--soft);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;padding:10px 16px;border-radius:99px;cursor:pointer}
+.chip.on{border-color:var(--pri);background:var(--soft)}
+.crisis{background:var(--warn);border:2px solid var(--warnb);border-radius:16px;padding:16px;margin:12px 0}
+label{display:block;font-weight:600;margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+textarea{min-height:90px;resize:vertical}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{border:2px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;background:var(--card);color:var(--ink);font:inherit;text-align:left}
+.opt.on{border-color:var(--pri);background:var(--soft)}
+.post{border-left:4px solid var(--pri);padding:6px 12px;margin:10px 0;background:var(--card);border-radius:0 10px 10px 0}
+.ok{background:var(--soft);padding:14px;border-radius:12px;margin-top:14px}
+.hidden{display:none}
+footer{max-width:900px;margin:auto;padding:0 16px 30px;color:var(--mute);font-size:14px}
+</style>
+</head>
+<body>
+<header><div class="bar"><div class="logo"><svg viewBox="0 0 64 64" width="34" height="34" style="vertical-align:middle;margin-right:8px"><rect width="64" height="64" rx="16" fill="#5b6ee1"/><g fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M27 22C24 16 12 17 12 25C12 33 27 31 27 40C27 48 15 48 12 43"/><path d="M34 21V38C34 51 50 51 50 38V16"/><path d="M44 22L50 15L56 22" stroke-width="5"/></g></svg>Speak Up</div>
+<nav id="nav"><button data-t="home" class="on">Home</button><button data-t="going">What I'm going through</button><button data-t="talk">Talk to me</button></nav></div></header>
+<main>
+
+<section id="home" class="on">
+<h1>You don't have to carry it alone.</h1>
+<p class="mute" style="font-size:18px">Speak Up is a safe, judgment-free space to say what's on your mind, find people who understand, and talk with a trained specialist when you're ready.</p>
+<p><button class="btn" data-go="going">Share what I'm going through</button> <button class="btn alt" data-go="talk">Talk to someone</button></p>
+<div class="grid">
+<div class="card"><h2 style="margin-top:0">Find your people</h2><p>Connect with others facing similar struggles and realise you're not the only one.</p></div>
+<div class="card"><h2 style="margin-top:0">Say it out loud</h2><p>Write what you're feeling, anonymously if you like. No judgment, no pressure.</p></div>
+<div class="card"><h2 style="margin-top:0">Talk to a specialist</h2><p>Book a call, an in-person meeting, or an online session with someone trained to help.</p></div>
+</div>
+<div class="crisis"><strong>If you are in immediate danger or thinking of ending your life,</strong> please call your local emergency number now or go to the nearest hospital, and tell someone near you. To find a helpline in your country, visit <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</div>
+</section>
+
+<section id="going">
+<h1>What are you going through?</h1>
+<p class="mute">Choose what fits best. You can pick more than one.</p>
+<div class="chips" id="chips"></div>
+<div id="topicBox" class="hidden">
+<div id="crisisBox" class="crisis hidden"><strong>You matter, and you deserve support right now.</strong> If you might act on these thoughts or feel unsafe, please call your emergency number, go to the nearest hospital, or tell someone close to you to stay with you. Helplines by country: <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>. You can also book a specialist below.</div>
+<div class="card"><p id="topicMsg"></p><button class="btn" data-go="talk">Book a specialist</button></div>
+<h2>Speak freely</h2>
+<div class="card">
+<label for="who">Name (optional, leave blank to stay anonymous)</label><input id="who" maxlength="30">
+<label for="msg">What's on your mind?</label><textarea id="msg" maxlength="600"></textarea>
+<p><button class="btn" id="postBtn">Share</button></p>
+<p class="mute" style="font-size:14px">Be kind. No judgment here. Don't share details of methods of harm.</p>
+</div>
+<div id="posts"></div>
+</div>
+</section>
+
+<section id="talk">
+<h1>Talk to me</h1>
+<p class="mute">Book time with a specialist who can listen and help. Everything you share is private.</p>
+<div class="card">
+<label>How would you like to talk?</label>
+<div class="opts" id="modes">
+<button class="opt on" data-m="call"><strong>Phone call</strong><br><span class="mute">They call you</span></button>
+<button class="opt" data-m="meet"><strong>Meet in person</strong><br><span class="mute">Pick a meeting place</span></button>
+<button class="opt" data-m="online"><strong>Online meeting</strong><br><span class="mute">Video or chat link</span></button></div>
+<label for="spec">Specialist</label>
+<select id="spec"><option>Counsellor / therapist</option><option>Addiction recovery specialist</option><option>Psychologist</option><option>Crisis support counsellor</option><option>Peer support mentor</option></select>
+<div id="placeBox" class="hidden"><label for="place">Meeting place</label>
+<select id="place"><option>Speak Up support centre</option><option>Partner clinic</option><option>Quiet community space</option></select></div>
+<label for="date">Date</label><input type="date" id="date">
+<label for="time">Time</label><select id="time"><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option></select>
+<label for="bname">Your name (a nickname is fine)</label><input id="bname" maxlength="40">
+<label for="bcon" id="conLbl">Phone number</label><input id="bcon" maxlength="60">
+<label for="bnote">Anything you'd like them to know? (optional)</label><textarea id="bnote" maxlength="400"></textarea>
+<p><button class="btn" id="bookBtn">Book appointment</button></p>
+<div id="done" class="ok hidden"></div>
+</div>
+<div class="crisis"><strong>Need help right now?</strong> Booking is not for emergencies. If you are in danger, call your local emergency number or visit <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</div>
+</section>
+</main>
+<footer>Speak Up offers support, not emergency care. This preview stores things only in your own browser.</footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+function show(t){$$('section').forEach(s=>s.classList.toggle('on',s.id===t));$$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));scrollTo(0,0)}
+$$('#nav button').forEach(b=>b.onclick=()=>show(b.dataset.t));
+$$('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+const topics={"Addiction":["Reaching out about addiction takes courage. Recovery is possible and you don't have to do it alone.",0],"Self-harm":["Thank you for being honest. You deserve care and kindness, and there are people who can help you find safer ways through this.",1],"Mental breakdowns":["When everything feels like too much, it helps to slow down and be heard. You're allowed to need support.",0],"Suicidal thoughts":["I'm really glad you're here. These feelings can change with support, and you deserve to have someone with you through this.",1],"Depression":["Feeling low and heavy is exhausting, and it's not a weakness. Talking about it is a real first step.",0],"Anxiety & panic":["Racing thoughts and panic are frightening but treatable. Let's get you some support.",0],"Grief & loss":["Loss hurts in ways that are hard to explain. You don't have to grieve alone.",0],"Loneliness":["Feeling alone is more common than people admit. You've found a place full of people who get it.",0]};
+const sel=new Set();let last='';
+const ch=$('#chips');Object.keys(topics).forEach(k=>{const b=document.createElement('button');b.className='chip';b.textContent=k;b.onclick=()=>{sel.has(k)?sel.delete(k):sel.add(k);b.classList.toggle('on');last=sel.has(k)?k:[...sel].pop()||'';render()};ch.appendChild(b)});
+function render(){const box=$('#topicBox');box.classList.toggle('hidden',!sel.size);if(!sel.size)return;
+$('#crisisBox').classList.toggle('hidden',![...sel].some(k=>topics[k][1]));
+$('#topicMsg').textContent=topics[last||[...sel][0]][0]+" You chose: "+[...sel].join(', ')+".";loadPosts()}
+let posts=[];function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+posts=store('su_posts')||[{n:'Anonymous',t:'I finally told someone today. It was terrifying but I feel lighter.',d:'Sample'},{n:'Amina',t:'Some days are harder than others. Thank you all for being here.',d:'Sample'}];
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function loadPosts(){$('#posts').innerHTML=posts.map(p=>`<div class="post"><strong>${esc(p.n)}</strong> <span class="mute">${esc(p.d)}</span><p>${esc(p.t)}</p></div>`).join('')}
+$('#postBtn').onclick=()=>{const t=$('#msg').value.trim();if(!t)return;posts.unshift({n:$('#who').value.trim()||'Anonymous',t,d:new Date().toLocaleDateString()});store('su_posts',posts.slice(0,50));$('#msg').value='';loadPosts()};
+let mode='call';
+$$('#modes .opt').forEach(o=>o.onclick=()=>{mode=o.dataset.m;$$('#modes .opt').forEach(x=>x.classList.toggle('on',x===o));$('#placeBox').classList.toggle('hidden',mode!=='meet');$('#conLbl').textContent=mode==='online'?'Email or WhatsApp (for the meeting link)':'Phone number'});
+$('#date').min=new Date().toISOString().slice(0,10);
+$('#bookBtn').onclick=()=>{const n=$('#bname').value.trim(),c=$('#bcon').value.trim(),d=$('#date').value;const out=$('#done');out.classList.remove('hidden');
+if(!n||!c||!d){out.textContent='Please add your name, contact and a date so the specialist can reach you.';return}
+const how={call:'a phone call to '+c,meet:'an in-person meeting at '+$('#place').value,online:'an online meeting (link sent to '+c+')'}[mode];
+const b=store('su_bookings')||[];b.push({n,c,d,mode});store('su_bookings',b);
+out.innerHTML='<strong>You\'re booked, '+esc(n)+'.</strong><br>'+esc($('#spec').value)+' · '+esc(d)+' at '+esc($('#time').value)+'<br>Format: '+esc(how)+'.<br>Taking this step matters.'};
+loadPosts();
+</script>
+</body>
+</html>
