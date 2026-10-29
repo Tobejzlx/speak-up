@@ -40,6 +40,26 @@ textarea{min-height:90px;resize:vertical}
 .ok{background:var(--soft);padding:14px;border-radius:12px;margin-top:14px}
 .hidden{display:none}
 footer{max-width:900px;margin:auto;padding:0 16px 30px;color:var(--mute);font-size:14px}
+
+/* responsive + touch polish */
+html{-webkit-text-size-adjust:100%}
+img,svg{max-width:100%}
+nav button,.chip,.opt,.btn{min-height:44px}
+nav button{padding:10px 16px}
+.post p,.ok,.card p{overflow-wrap:anywhere}
+input,select,textarea{min-height:44px;font-size:16px}
+input[type=checkbox]{min-height:0;width:20px;height:20px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+@media (max-width:640px){
+ .bar{padding:10px 12px}
+ nav{width:100%;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+ nav button{white-space:nowrap;flex:0 0 auto}
+ main{padding:16px 12px 48px}
+ .card{padding:14px}
+ .btn{width:100%;text-align:center;margin-bottom:8px}
+ .chips .chip{flex:1 1 auto}
+}
+@media (min-width:1000px){.bar,main,footer{max-width:1000px}}
 </style>
 </head>
 <body>
@@ -133,11 +153,15 @@ $('#postBtn').onclick=()=>{const t=$('#msg').value.trim();if(!t)return;posts.uns
 let mode='call';
 $$('#modes .opt').forEach(o=>o.onclick=()=>{mode=o.dataset.m;$$('#modes .opt').forEach(x=>x.classList.toggle('on',x===o));$('#placeBox').classList.toggle('hidden',mode!=='meet')});
 $('#date').min=new Date().toISOString().slice(0,10);
+const W3_KEY='PASTE_YOUR_WEB3FORMS_KEY_HERE';
 async function sendMail(subject,data){
- const body=Object.assign({_subject:subject,_template:'table',_captcha:'false'},data);
- const r=await fetch('https://formsubmit.co/ajax/ikemtobe@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)});
+ const useW3=W3_KEY.length>20;
+ const url=useW3?'https://api.web3forms.com/submit':'https://formsubmit.co/ajax/ikemtobe@gmail.com';
+ const body=useW3?Object.assign({access_key:W3_KEY,subject:subject,from_name:'Speak Up'},data):Object.assign({_subject:subject,_template:'table',_captcha:'false'},data);
+ const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)});
  const j=await r.json().catch(()=>({}));
- if(!r.ok||j.success==='false'||j.success===false)throw new Error(j.message||'send failed');
+ console.log('Mail response:',r.status,j);
+ if(!r.ok||j.success===false||j.success==='false')throw new Error(j.message||'send failed');
  return j}
 const okMail=e=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
 const okPhone=p=>p.replace(/\D/g,'').length>=7;
