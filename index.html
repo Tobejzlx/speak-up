@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Speak Up</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2216%22%20fill=%22%235b6ee1%22/%3E%3Cg%20fill=%22none%22%20stroke=%22%23fff%22%20stroke-width=%226.5%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%3E%3Cpath%20d=%22M27%2022C24%2016%2012%2017%2012%2025C12%2033%2027%2031%2027%2040C27%2048%2015%2048%2012%2043%22/%3E%3Cpath%20d=%22M34%2021V38C34%2051%2050%2051%2050%2038V16%22/%3E%3Cpath%20d=%22M44%2022L50%2015L56%2022%22%20stroke-width=%225%22/%3E%3C/g%3E%3C/svg%3E">
 <style>
 :root{--bg:#fbf8f4;--card:#fff;--ink:#2a2733;--mute:#6b6676;--pri:#5b6ee1;--pri-ink:#fff;--soft:#eceefc;--warn:#fff1ee;--warnb:#e5604a;--line:#e6e1da;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17161c;--card:#211f29;--ink:#f1eef7;--mute:#a49fb2;--pri:#8c9bff;--pri-ink:#14131a;--soft:#2a2c47;--warn:#3a211d;--warnb:#ff8a74;--line:#34313f}}
@@ -42,7 +43,7 @@ footer{max-width:900px;margin:auto;padding:0 16px 30px;color:var(--mute);font-si
 </style>
 </head>
 <body>
-<header><div class="bar"><div class="logo">Speak Up</div>
+<header><div class="bar"><div class="logo"><svg viewBox="0 0 64 64" width="34" height="34" style="vertical-align:middle;margin-right:8px"><rect width="64" height="64" rx="16" fill="#5b6ee1"/><g fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"><path d="M27 22C24 16 12 17 12 25C12 33 27 31 27 40C27 48 15 48 12 43"/><path d="M34 21V38C34 51 50 51 50 38V16"/><path d="M44 22L50 15L56 22" stroke-width="5"/></g></svg>Speak Up</div>
 <nav id="nav"><button data-t="home" class="on">Home</button><button data-t="going">What I'm going through</button><button data-t="talk">Talk to me</button></nav></div></header>
 <main>
 
@@ -55,6 +56,14 @@ footer{max-width:900px;margin:auto;padding:0 16px 30px;color:var(--mute);font-si
 <div class="card"><h2 style="margin-top:0">Say it out loud</h2><p>Write what you're feeling, anonymously if you like. No judgment, no pressure.</p></div>
 <div class="card"><h2 style="margin-top:0">Talk to a specialist</h2><p>Book a call, an in-person meeting, or an online session with someone trained to help.</p></div>
 </div>
+<div class="card" id="reach"><h2 style="margin-top:0">Want someone to reach out to you?</h2>
+<p class="mute">Leave your email and/or phone number and our team will contact you. Share only what you're comfortable with.</p>
+<label for="hname">Name (optional)</label><input id="hname" maxlength="40" autocomplete="name">
+<label for="hemail">Email</label><input id="hemail" type="email" maxlength="80" autocomplete="email" placeholder="you@example.com">
+<label for="hphone">Phone number (with country code)</label><input id="hphone" type="tel" maxlength="25" autocomplete="tel" placeholder="+220 ...">
+<label for="hmsg">What would you like us to know? (optional)</label><textarea id="hmsg" maxlength="600"></textarea>
+<label style="font-weight:400;display:flex;gap:8px;align-items:flex-start;margin-top:14px"><input type="checkbox" id="hconsent" style="width:auto;margin-top:5px"> I agree that the Speak Up team may contact me and see what I've shared.</label>
+<p><button class="btn" id="helpBtn">Send to the team</button></p><div id="helpDone" class="ok hidden"></div></div>
 <div class="crisis"><strong>If you are in immediate danger or thinking of ending your life,</strong> please call your local emergency number now or go to the nearest hospital, and tell someone near you. To find a helpline in your country, visit <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</div>
 </section>
 
@@ -92,7 +101,10 @@ footer{max-width:900px;margin:auto;padding:0 16px 30px;color:var(--mute);font-si
 <label for="date">Date</label><input type="date" id="date">
 <label for="time">Time</label><select id="time"><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option></select>
 <label for="bname">Your name (a nickname is fine)</label><input id="bname" maxlength="40">
-<label for="bcon" id="conLbl">Phone number</label><input id="bcon" maxlength="60">
+<label for="bemail">Email</label><input id="bemail" type="email" maxlength="80" autocomplete="email" placeholder="you@example.com">
+<label for="bphone">Phone number (with country code)</label><input id="bphone" type="tel" maxlength="25" autocomplete="tel" placeholder="+220 ...">
+<p class="mute" style="font-size:14px;margin:4px 0 0">Give at least one so the specialist can reach you.</p>
+<label style="font-weight:400;display:flex;gap:8px;align-items:flex-start;margin-top:14px"><input type="checkbox" id="bconsent" style="width:auto;margin-top:5px"> I agree that the Speak Up team may contact me and see the details I've shared.</label>
 <label for="bnote">Anything you'd like them to know? (optional)</label><textarea id="bnote" maxlength="400"></textarea>
 <p><button class="btn" id="bookBtn">Book appointment</button></p>
 <div id="done" class="ok hidden"></div>
@@ -100,7 +112,7 @@ footer{max-width:900px;margin:auto;padding:0 16px 30px;color:var(--mute);font-si
 <div class="crisis"><strong>Need help right now?</strong> Booking is not for emergencies. If you are in danger, call your local emergency number or visit <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</div>
 </section>
 </main>
-<footer>Speak Up offers support, not emergency care. This preview stores things only in your own browser.</footer>
+<footer>Speak Up offers support, not emergency care. Booking and contact requests go to the Speak Up team. Community posts stay in your own browser.</footer>
 
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -119,13 +131,44 @@ function esc(s){const d=document.createElement('div');d.textContent=s;return d.i
 function loadPosts(){$('#posts').innerHTML=posts.map(p=>`<div class="post"><strong>${esc(p.n)}</strong> <span class="mute">${esc(p.d)}</span><p>${esc(p.t)}</p></div>`).join('')}
 $('#postBtn').onclick=()=>{const t=$('#msg').value.trim();if(!t)return;posts.unshift({n:$('#who').value.trim()||'Anonymous',t,d:new Date().toLocaleDateString()});store('su_posts',posts.slice(0,50));$('#msg').value='';loadPosts()};
 let mode='call';
-$$('#modes .opt').forEach(o=>o.onclick=()=>{mode=o.dataset.m;$$('#modes .opt').forEach(x=>x.classList.toggle('on',x===o));$('#placeBox').classList.toggle('hidden',mode!=='meet');$('#conLbl').textContent=mode==='online'?'Email or WhatsApp (for the meeting link)':'Phone number'});
+$$('#modes .opt').forEach(o=>o.onclick=()=>{mode=o.dataset.m;$$('#modes .opt').forEach(x=>x.classList.toggle('on',x===o));$('#placeBox').classList.toggle('hidden',mode!=='meet')});
 $('#date').min=new Date().toISOString().slice(0,10);
-$('#bookBtn').onclick=()=>{const n=$('#bname').value.trim(),c=$('#bcon').value.trim(),d=$('#date').value;const out=$('#done');out.classList.remove('hidden');
-if(!n||!c||!d){out.textContent='Please add your name, contact and a date so the specialist can reach you.';return}
-const how={call:'a phone call to '+c,meet:'an in-person meeting at '+$('#place').value,online:'an online meeting (link sent to '+c+')'}[mode];
-const b=store('su_bookings')||[];b.push({n,c,d,mode});store('su_bookings',b);
-out.innerHTML='<strong>You\'re booked, '+esc(n)+'.</strong><br>'+esc($('#spec').value)+' · '+esc(d)+' at '+esc($('#time').value)+'<br>Format: '+esc(how)+'.<br>Taking this step matters.'};
+async function sendMail(subject,data){
+ const body=Object.assign({_subject:subject,_template:'table',_captcha:'false'},data);
+ const r=await fetch('https://formsubmit.co/ajax/ikemtobe@gmail.com',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok||j.success==='false'||j.success===false)throw new Error(j.message||'send failed');
+ return j}
+const okMail=e=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
+const okPhone=p=>p.replace(/\D/g,'').length>=7;
+$('#bookBtn').onclick=async()=>{
+ const n=$('#bname').value.trim(),em=$('#bemail').value.trim(),ph=$('#bphone').value.trim(),d=$('#date').value,out=$('#done'),btn=$('#bookBtn');
+ out.classList.remove('hidden');
+ if(!n||!d){out.textContent='Please add your name and a date.';return}
+ if(!em&&!ph){out.textContent='Please add an email or a phone number so the specialist can reach you.';return}
+ if(em&&!okMail(em)){out.textContent='That email address does not look right.';return}
+ if(ph&&!okPhone(ph)){out.textContent='That phone number does not look right.';return}
+ if(!$('#bconsent').checked){out.textContent='Please tick the box to agree to be contacted.';return}
+ const how={call:'Phone call',meet:'In-person meeting at '+$('#place').value,online:'Online meeting'}[mode];
+ btn.disabled=true;out.textContent='Sending your request...';
+ try{
+  await sendMail('New Speak Up appointment request from '+n,{Name:n,Email:em||'(not given)',Phone:ph||'(not given)',Specialist:$('#spec').value,Format:how,Date:d,Time:$('#time').value,Note:$('#bnote').value.trim()||'(none)',Going_through:[...sel].join(', ')||'(not chosen)'});
+  out.innerHTML='<strong>Your request has been sent, '+esc(n)+'.</strong><br>'+esc($('#spec').value)+' · '+esc(d)+' at '+esc($('#time').value)+'<br>Format: '+esc(how)+'.<br>The team will contact you by '+(em&&ph?'email or phone':em?'email':'phone')+'. Taking this step matters.'
+ }catch(e){out.textContent='Sorry, we could not send your request. Please check your internet and try again.'}
+ btn.disabled=false};
+$('#helpBtn').onclick=async()=>{
+ const n=$('#hname').value.trim(),em=$('#hemail').value.trim(),ph=$('#hphone').value.trim(),out=$('#helpDone'),btn=$('#helpBtn');
+ out.classList.remove('hidden');
+ if(!em&&!ph){out.textContent='Please add an email or a phone number so we can reach you.';return}
+ if(em&&!okMail(em)){out.textContent='That email address does not look right.';return}
+ if(ph&&!okPhone(ph)){out.textContent='That phone number does not look right.';return}
+ if(!$('#hconsent').checked){out.textContent='Please tick the box to agree to be contacted.';return}
+ btn.disabled=true;out.textContent='Sending...';
+ try{
+  await sendMail('Speak Up: someone wants to be contacted'+(n?' ('+n+')':''),{Name:n||'(anonymous)',Email:em||'(not given)',Phone:ph||'(not given)',Going_through:[...sel].join(', ')||'(not chosen)',Message:$('#hmsg').value.trim()||'(none)'});
+  out.innerHTML='<strong>Thank you for reaching out.</strong> Someone from our team will contact you soon. If you are in danger right now, please call your local emergency number.'
+ }catch(e){out.textContent='Sorry, we could not send this. Please check your internet and try again.'}
+ btn.disabled=false};
 loadPosts();
 </script>
 </body>
