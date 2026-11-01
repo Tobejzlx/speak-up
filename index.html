@@ -154,15 +154,27 @@ let mode='call';
 $$('#modes .opt').forEach(o=>o.onclick=()=>{mode=o.dataset.m;$$('#modes .opt').forEach(x=>x.classList.toggle('on',x===o));$('#placeBox').classList.toggle('hidden',mode!=='meet')});
 $('#date').min=new Date().toISOString().slice(0,10);
 const W3_KEY='PASTE_YOUR_WEB3FORMS_KEY_HERE';
-async function sendMail(subject,data){
- const useW3=W3_KEY.length>20;
- const url=useW3?'https://api.web3forms.com/submit':'https://formsubmit.co/ajax/ikemtobe@gmail.com';
- const body=useW3?Object.assign({access_key:W3_KEY,subject:subject,from_name:'Speak Up'},data):Object.assign({_subject:subject,_template:'table',_captcha:'false'},data);
+async function post(url,body){
  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(body)});
  const j=await r.json().catch(()=>({}));
- console.log('Mail response:',r.status,j);
+ console.log('Mail response:',url,r.status,j);
  if(!r.ok||j.success===false||j.success==='false')throw new Error(j.message||'send failed');
  return j}
+async function sendMail(subject,data){
+ const hasKey=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(W3_KEY.trim());
+ const fs=()=>post('https://formsubmit.co/ajax/ikemtobe@gmail.com',Object.assign({_subject:subject,_template:'table',_captcha:'false'},data));
+ if(hasKey){
+  try{return await post('https://api.web3forms.com/submit',Object.assign({access_key:W3_KEY.trim(),subject:subject,from_name:'Speak Up'},data))}
+  catch(e){console.warn('Web3Forms failed, trying FormSubmit',e)}
+ }
+ return fs()}
+function fail(out,e,kind){
+ const g=id=>($(id)&&$(id).value||'').trim();
+ const lines=kind==='book'?['Appointment request','Name: '+g('#bname'),'Email: '+g('#bemail'),'Phone: '+g('#bphone'),'Specialist: '+g('#spec'),'Date: '+g('#date')+' '+g('#time'),'Note: '+g('#bnote')]:['Help request','Name: '+g('#hname'),'Email: '+g('#hemail'),'Phone: '+g('#hphone'),'Message: '+g('#hmsg')];
+ lines.push('Going through: '+([...sel].join(', ')||'-'));
+ const href='mailto:ikemtobe@gmail.com?subject='+encodeURIComponent('Speak Up '+lines[0])+'&body='+encodeURIComponent(lines.join('\n'));
+ out.innerHTML='Sorry, we could not send this automatically. <a href="'+href+'"><strong>Tap here to send it by email instead</strong></a>.<br><span class="mute" style="font-size:13px">Reason: '+esc(String(e&&e.message||e))+'</span>';
+ console.error('Send failed:',e)}
 const okMail=e=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
 const okPhone=p=>p.replace(/\D/g,'').length>=7;
 $('#bookBtn').onclick=async()=>{
@@ -178,7 +190,7 @@ $('#bookBtn').onclick=async()=>{
  try{
   await sendMail('New Speak Up appointment request from '+n,{Name:n,Email:em||'(not given)',Phone:ph||'(not given)',Specialist:$('#spec').value,Format:how,Date:d,Time:$('#time').value,Note:$('#bnote').value.trim()||'(none)',Going_through:[...sel].join(', ')||'(not chosen)'});
   out.innerHTML='<strong>Your request has been sent, '+esc(n)+'.</strong><br>'+esc($('#spec').value)+' · '+esc(d)+' at '+esc($('#time').value)+'<br>Format: '+esc(how)+'.<br>The team will contact you by '+(em&&ph?'email or phone':em?'email':'phone')+'. Taking this step matters.'
- }catch(e){out.textContent='Sorry, we could not send your request. Please check your internet and try again.'}
+ }catch(e){fail(out,e,'book')}
  btn.disabled=false};
 $('#helpBtn').onclick=async()=>{
  const n=$('#hname').value.trim(),em=$('#hemail').value.trim(),ph=$('#hphone').value.trim(),out=$('#helpDone'),btn=$('#helpBtn');
@@ -191,7 +203,7 @@ $('#helpBtn').onclick=async()=>{
  try{
   await sendMail('Speak Up: someone wants to be contacted'+(n?' ('+n+')':''),{Name:n||'(anonymous)',Email:em||'(not given)',Phone:ph||'(not given)',Going_through:[...sel].join(', ')||'(not chosen)',Message:$('#hmsg').value.trim()||'(none)'});
   out.innerHTML='<strong>Thank you for reaching out.</strong> Someone from our team will contact you soon. If you are in danger right now, please call your local emergency number.'
- }catch(e){out.textContent='Sorry, we could not send this. Please check your internet and try again.'}
+ }catch(e){fail(out,e,'help')}
  btn.disabled=false};
 loadPosts();
 </script>
